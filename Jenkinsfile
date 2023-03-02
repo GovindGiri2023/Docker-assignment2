@@ -26,7 +26,7 @@ pipeline{
 				stage("remmoving if containre is running"){
 				    agent{
 				    	label{
-						    label "Slave-1"
+						    label "slave-1"
 					    }
 				    }
 				    steps{
@@ -38,7 +38,7 @@ pipeline{
         		stage("Creating container"){
         		    				    agent{
 				    	label{
-						    label "Slave-1"
+						    label "slave-1"
 					    }
 				    }
         			steps{
