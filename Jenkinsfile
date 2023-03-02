@@ -4,9 +4,7 @@ pipeline{
 			label "built-in"
 		}
 	}
-	parameters{
-		string(name: "PORT", description: "Please assign one port number to docker container:")
-	}
+	
 	stages{
 		stage("Cleaning workspace"){
 			steps{
@@ -49,10 +47,13 @@ pipeline{
         	}
         }
 
-		stage("Coping index file to container:"){
-			steps{
-					sh "sudo docker cp $WORKSPACE/index.html httpd_${GIT_BRANCH}:/usr/local/apache2/htdocs/"
-			}
+		steps{
+				sshagent(credentials : ["ad5d0717-3dfb-469a-8d83-26686a49abee"]) {
+				
+					sh'''
+					sftp  -o StrictHostKeyChecking=no ec2-user@172.31.81.49 <<EOF
+					put  $WORKSPACE/gameoflife-web/target/gameoflife.war /opt/
+					exit
 		}
 	}
 }
